@@ -2,8 +2,8 @@
 
 class BillingsController < ApplicationController
   def index
-    pagy, billings = pagy(Billing.all.order(due_date: :desc))
-    render json: { items: billings }
+    @pagy, @billings = pagy(Billing.all.order(due_date: :desc, uuid: :desc))
+    render json: { items: @billings }
   end
 
   def import
