@@ -1,0 +1,15 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: db
+  username: postgres
+  password: password
+  pool: 5
+
+development:
+  <<: *default
+  database: test-backend-kanastra-development
+
+test:
+  <<: *default
+  database: test-backend-kanastra-test

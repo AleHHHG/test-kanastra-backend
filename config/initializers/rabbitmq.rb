@@ -1,0 +1,1 @@
+RABBITMQ = Rails.application.config_for(:rabbitmq).symbolize_keys

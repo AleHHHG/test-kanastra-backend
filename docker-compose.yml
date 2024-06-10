@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: test-backend-kanastra
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+      # send logs to stdout
+      RABBITMQ_LOGS: '-'
+      RABBITMQ_SASL_LOGS: '-'
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  web:
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -b '0.0.0.0'"
+    volumes:
+      - .:/myapp
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - rabbitmq
+    environment:
+      RAILS_ENV: development
+
+  worker:
+    build: .
+    command: bundle exec rake sneakers:run
+    volumes:
+      - .:/myapp
+    depends_on:
+      - db
+      - rabbitmq
+    environment:
+      RAILS_ENV: development
+
+volumes:
+  db-data:

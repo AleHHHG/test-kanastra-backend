@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Email de cobrança</title>
+	</head>
+	<body>
+		<table>
+			<tr>
+				<td>
+					Olá <b><%= @billing.name %></b> <br/>
+					Sua cobrança encontra-se disponivel
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Valor: R$ <%= @billing.amount %>
+					Data de vencimento: <%= @billing.due_date.to_s %>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Linha digitavel <br/>
+					<%= @billing.uuid %>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

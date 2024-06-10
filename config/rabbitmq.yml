@@ -1,0 +1,12 @@
+default: &default
+  vhost: 'kanastra'
+  port: 5672
+  amqp: 'amqp://user:password@rabbitmq'
+  user: 'user'
+  password: 'password'
+
+development:
+  <<: *default
+
+test:
+  <<: *default
